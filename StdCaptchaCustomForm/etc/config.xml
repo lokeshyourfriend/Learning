@@ -9,6 +9,9 @@
     <default>
         <customer>
             <captcha>
+                <shown_to_logged_in_user>
+                    <custom_form>1</custom_form>
+                </shown_to_logged_in_user>
                 <always_for>
                     <custom_form>1</custom_form>
                 </always_for>

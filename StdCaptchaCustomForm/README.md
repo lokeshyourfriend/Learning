@@ -1,7 +1,15 @@
-# Magento reCAPTCHA
+Enable Standard Captcha on Custom form
 
-Google reCAPTCHA ensures that a human being, rather than a computer (or “bot”), is interacting with your website. Unlike the standard Magento CAPTCHA, Google reCAPTCHA provides enhanced security with a selection of different display options and methods. Additional website traffic information is available in the dashboard of your Google reCAPTCHA account.
+Magento_Captcha is the module that needs to be use for enabling standard captcha on the form.
 
-This module provides the reCAPTCHA implementations related to the contact page.
-
-For more information please visit the [Magento document for reCAPTCHA](https://docs.magento.com/user-guide/stores/security-google-recaptcha.html).
+First step to include your form in the list of the options in available forms in Customer Configuration section in the magento admin store configuration section.
+To make available your form in the list of available forms store configuration you need to create the Vendor/Module/etc/config.xml (click for reference)
+To show the captcha, Your custom form has a container “form.additional.info”, you need to refer to that container and add a block in the container. (click here for reference) 
+Also you need to refer the block “head.components” and add the block that referencing the template "Magento_Captcha::js/components.phtml" (click here for reference) 
+To validate the captcha you need to use the event “controller_action_predispatch_customform_index_post” (click here for reference)
+Write you observer and inject the necessary classes to validate the captcha (click here for reference)
+$formId = 'custom_form';
+/** \Magento\Captcha\Helper\Data $helper **/
+$captcha = $this->helper->getCaptcha($formId);
+/**Magento\Captcha\Observer\CaptchaStringResolver**/
+$result = $captcha->isValid($this->captchaStringResolver->resolve($controller->getRequest(), $formId));

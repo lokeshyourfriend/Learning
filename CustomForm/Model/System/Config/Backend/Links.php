@@ -3,7 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Learning\RecaptchaCustomForm\Model\System\Config\Backend;
+namespace Learning\CustomForm\Model\System\Config\Backend;
 
 use Magento\Config\Model\Config\Backend\Cache;
 
@@ -12,12 +12,16 @@ use Magento\Config\Model\Config\Backend\Cache;
  */
 class Links extends Cache implements \Magento\Framework\DataObject\IdentityInterface
 {
+
     /**
      * Cache tags to clean
      *
      * @var string[]
      */
-    protected $_cacheTags = [\Magento\Store\Model\Store::CACHE_TAG, \Magento\Cms\Model\Block::CACHE_TAG];
+    protected $_cacheTags = [
+        \Magento\Store\Model\Store::CACHE_TAG,
+        \Magento\Cms\Model\Block::CACHE_TAG
+    ];
 
     /**
      * Get identities
@@ -26,6 +30,9 @@ class Links extends Cache implements \Magento\Framework\DataObject\IdentityInter
      */
     public function getIdentities()
     {
-        return [\Magento\Store\Model\Store::CACHE_TAG, \Magento\Cms\Model\Block::CACHE_TAG];
+        return [
+            \Magento\Store\Model\Store::CACHE_TAG,
+            \Magento\Cms\Model\Block::CACHE_TAG
+        ];
     }
 }

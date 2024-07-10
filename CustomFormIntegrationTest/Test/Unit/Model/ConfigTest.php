@@ -3,11 +3,10 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
+namespace Learning\CustomFormIntegrationTest\Test\Unit\Model;
 
-namespace Magento\Contact\Test\Unit\Model;
-
-use Magento\Contact\Model\Config;
+use Learning\CustomForm\Model\Config;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager as ObjectManagerHelper;
 use Magento\Store\Model\ScopeInterface;
@@ -19,33 +18,37 @@ use PHPUnit\Framework\TestCase;
  */
 class ConfigTest extends TestCase
 {
+
     /**
+     *
      * @var Config
      */
     private $model;
 
     /**
+     *
      * @var ScopeConfigInterface|MockObject
      */
     private $scopeConfigMock;
 
     /**
+     *
      * @inheritdoc
      */
     protected function setUp(): void
     {
         $this->scopeConfigMock = $this->getMockBuilder(ScopeConfigInterface::class)
-            ->setMethods(['getValue', 'isSetFlag'])
+            ->setMethods([
+            'getValue',
+            'isSetFlag'
+        ])
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
 
         $objectManager = new ObjectManagerHelper($this);
-        $this->model = $objectManager->getObject(
-            Config::class,
-            [
-                'scopeConfig' => $this->scopeConfigMock
-            ]
-        );
+        $this->model = $objectManager->getObject(Config::class, [
+            'scopeConfig' => $this->scopeConfigMock
+        ]);
     }
 
     /**
@@ -72,8 +75,14 @@ class ConfigTest extends TestCase
     public function isEnabledDataProvider(): array
     {
         return [
-            [true, true],
-            [false, false]
+            [
+                true,
+                true
+            ],
+            [
+                false,
+                false
+            ]
         ];
     }
 

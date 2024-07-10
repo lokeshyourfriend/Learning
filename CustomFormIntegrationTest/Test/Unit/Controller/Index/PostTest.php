@@ -4,12 +4,11 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
+namespace Magento\CustomFormIntegrationTest\Test\Unit\Controller\Index;
 
-namespace Magento\Contact\Test\Unit\Controller\Index;
-
-use Magento\Contact\Controller\Index\Post;
-use Magento\Contact\Model\MailInterface;
+use Learning\CustomForm\Controller\Index\Post;
+use Learning\CustomForm\Model\MailInterface;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Request\DataPersistorInterface;
 use Magento\Framework\App\Request\Http;
@@ -23,47 +22,57 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
+ *
  * @covers \Magento\Contact\Controller\Index\Post
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class PostTest extends TestCase
 {
+
     /**
+     *
      * @var Post
      */
     private $controller;
 
     /**
+     *
      * @var RedirectFactory|MockObject
      */
     private $redirectResultFactoryMock;
 
     /**
+     *
      * @var Redirect|MockObject
      */
     private $redirectResultMock;
 
     /**
+     *
      * @var UrlInterface|MockObject
      */
     private $urlMock;
 
     /**
+     *
      * @var Http|MockObject
      */
     private $requestStub;
 
     /**
+     *
      * @var ManagerInterface|MockObject
      */
     private $messageManagerMock;
 
     /**
+     *
      * @var DataPersistorInterface|MockObject
      */
     private $dataPersistorMock;
 
     /**
+     *
      * @var MailInterface|MockObject
      */
     private $mailMock;
@@ -73,32 +82,33 @@ class PostTest extends TestCase
      */
     protected function setUp(): void
     {
-        $this->mailMock = $this->getMockBuilder(MailInterface::class)
-            ->getMockForAbstractClass();
-        $contextMock = $this->createPartialMock(
-            Context::class,
-            ['getRequest', 'getResponse', 'getResultRedirectFactory', 'getUrl', 'getRedirect', 'getMessageManager']
-        );
+        $this->mailMock = $this->getMockBuilder(MailInterface::class)->getMockForAbstractClass();
+        $contextMock = $this->createPartialMock(Context::class, [
+            'getRequest',
+            'getResponse',
+            'getResultRedirectFactory',
+            'getUrl',
+            'getRedirect',
+            'getMessageManager'
+        ]);
         $this->urlMock = $this->getMockForAbstractClass(UrlInterface::class);
         $this->messageManagerMock = $this->getMockForAbstractClass(ManagerInterface::class);
-        $this->requestStub = $this->createPartialMock(
-            Http::class,
-            ['getPostValue', 'getParams', 'getParam', 'isPost']
-        );
+        $this->requestStub = $this->createPartialMock(Http::class, [
+            'getPostValue',
+            'getParams',
+            'getParam',
+            'isPost'
+        ]);
 
         $this->redirectResultMock = $this->createMock(Redirect::class);
         $this->redirectResultMock->method('setPath')->willReturnSelf();
 
-        $this->redirectResultFactoryMock = $this->createPartialMock(
-            RedirectFactory::class,
-            ['create']
-        );
-        $this->redirectResultFactoryMock
-            ->method('create')
-            ->willReturn($this->redirectResultMock);
+        $this->redirectResultFactoryMock = $this->createPartialMock(RedirectFactory::class, [
+            'create'
+        ]);
+        $this->redirectResultFactoryMock->method('create')->willReturn($this->redirectResultMock);
 
-        $this->dataPersistorMock = $this->getMockBuilder(DataPersistorInterface::class)
-            ->getMockForAbstractClass();
+        $this->dataPersistorMock = $this->getMockBuilder(DataPersistorInterface::class)->getMockForAbstractClass();
 
         $contextMock->expects($this->any())
             ->method('getRequest')
@@ -116,14 +126,11 @@ class PostTest extends TestCase
             ->method('getResultRedirectFactory')
             ->willReturn($this->redirectResultFactoryMock);
 
-        $this->controller = (new ObjectManagerHelper($this))->getObject(
-            Post::class,
-            [
-                'context' => $contextMock,
-                'mail' => $this->mailMock,
-                'dataPersistor' => $this->dataPersistorMock
-            ]
-        );
+        $this->controller = (new ObjectManagerHelper($this))->getObject(Post::class, [
+            'context' => $contextMock,
+            'mail' => $this->mailMock,
+            'dataPersistor' => $this->dataPersistorMock
+        ]);
     }
 
     /**
@@ -159,12 +166,54 @@ class PostTest extends TestCase
     public function postDataProvider(): array
     {
         return [
-            [['name' => null, 'comment' => null, 'email' => '', 'hideit' => 'no']],
-            [['name' => 'test', 'comment' => '', 'email' => '', 'hideit' => 'no']],
-            [['name' => '', 'comment' => 'test', 'email' => '', 'hideit' => 'no']],
-            [['name' => '', 'comment' => '', 'email' => 'test', 'hideit' => 'no']],
-            [['name' => '', 'comment' => '', 'email' => '', 'hideit' => 'no']],
-            [['name' => 'Name', 'comment' => 'Name', 'email' => 'invalidmail', 'hideit' => 'no']],
+            [
+                [
+                    'name' => null,
+                    'comment' => null,
+                    'email' => '',
+                    'hideit' => 'no'
+                ]
+            ],
+            [
+                [
+                    'name' => 'test',
+                    'comment' => '',
+                    'email' => '',
+                    'hideit' => 'no'
+                ]
+            ],
+            [
+                [
+                    'name' => '',
+                    'comment' => 'test',
+                    'email' => '',
+                    'hideit' => 'no'
+                ]
+            ],
+            [
+                [
+                    'name' => '',
+                    'comment' => '',
+                    'email' => 'test',
+                    'hideit' => 'no'
+                ]
+            ],
+            [
+                [
+                    'name' => '',
+                    'comment' => '',
+                    'email' => '',
+                    'hideit' => 'no'
+                ]
+            ],
+            [
+                [
+                    'name' => 'Name',
+                    'comment' => 'Name',
+                    'email' => 'invalidmail',
+                    'hideit' => 'no'
+                ]
+            ]
         ];
     }
 
@@ -196,16 +245,13 @@ class PostTest extends TestCase
      */
     private function stubRequestPostData($post): void
     {
-        $this->requestStub
-            ->expects($this->once())
+        $this->requestStub->expects($this->once())
             ->method('isPost')
-            ->willReturn(!empty($post));
+            ->willReturn(! empty($post));
         $this->requestStub->method('getPostValue')->willReturn($post);
         $this->requestStub->method('getParams')->willReturn($post);
-        $this->requestStub->method('getParam')->willReturnCallback(
-            function ($key, $defaultValue) use ($post) {
-                return $post[$key] ?? $defaultValue;
-            }
-        );
+        $this->requestStub->method('getParam')->willReturnCallback(function ($key, $defaultValue) use ($post) {
+            return $post[$key] ?? $defaultValue;
+        });
     }
 }

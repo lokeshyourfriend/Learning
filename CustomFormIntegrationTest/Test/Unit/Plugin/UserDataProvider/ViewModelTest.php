@@ -3,11 +3,10 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
+namespace Learning\CustomFormIntegrationTest\Test\Unit\Plugin\UserDataProvider;
 
-namespace Magento\Contact\Test\Unit\Plugin\UserDataProvider;
-
-use Magento\Contact\Plugin\UserDataProvider\ViewModel as ViewModelPlugin;
+use Learning\CustomForm\Plugin\UserDataProvider\ViewModel as ViewModelPlugin;
 use Magento\Framework\DataObject;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -18,22 +17,27 @@ use PHPUnit\Framework\TestCase;
  */
 class ViewModelTest extends TestCase
 {
+
     /**
+     *
      * @var ArgumentInterface|MockObject
      */
     private $viewModelMock;
 
     /**
+     *
      * @var DataObject|MockObject
      */
     private $blockMock;
 
     /**
+     *
      * @var ViewModelPlugin
      */
     private $plugin;
 
     /**
+     *
      * @inheritDoc
      */
     protected function setUp(): void
@@ -45,6 +49,7 @@ class ViewModelTest extends TestCase
     }
 
     /**
+     *
      * @dataProvider dataProvider
      */
     public function testBeforeToHtml($hasDataResult, $setDataExpects)
@@ -66,11 +71,11 @@ class ViewModelTest extends TestCase
         return [
             'view model was not preset before' => [
                 'hasData' => false,
-                'setData' => $this->once(),
+                'setData' => $this->once()
             ],
             'view model was pre-installed before' => [
                 'hasData' => true,
-                'setData' => $this->never(),
+                'setData' => $this->never()
             ]
         ];
     }

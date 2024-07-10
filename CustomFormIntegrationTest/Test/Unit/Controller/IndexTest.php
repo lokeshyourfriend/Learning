@@ -3,13 +3,12 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
+namespace Learning\CustomFormIntegrationTest\Test\Unit\Controller;
 
-namespace Magento\Contact\Test\Unit\Controller;
-
-use Magento\Contact\Controller\Index;
-use Magento\Contact\Model\ConfigInterface;
-use Magento\Contact\Test\Unit\Controller\Stub\IndexStub;
+use Learning\CustomForm\Controller\Index;
+use Learning\CustomForm\Model\ConfigInterface;
+use Learning\CustomFormIntegrationTest\Test\Unit\Controller\Stub\IndexStub;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\App\ResponseInterface;
@@ -19,40 +18,46 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
+ *
  * @covers \Magento\Contact\Controller\Index
  */
 class IndexTest extends TestCase
 {
+
     /**
+     *
      * @var Index
      */
     private $controller;
 
     /**
+     *
      * @var ConfigInterface|MockObject
      */
     private $configMock;
 
     /**
+     *
      * @var RequestInterface|MockObject
      */
     private $requestMock;
 
     /**
+     *
      * @inheritDoc
      */
     protected function setUp(): void
     {
-        $this->configMock = $this->getMockBuilder(ConfigInterface::class)
-            ->getMockForAbstractClass();
+        $this->configMock = $this->getMockBuilder(ConfigInterface::class)->getMockForAbstractClass();
 
-        $this->requestMock = $this->getMockBuilder(RequestInterface::class)
-            ->getMockForAbstractClass();
-        $responseMock = $this->getMockBuilder(ResponseInterface::class)
-            ->getMockForAbstractClass();
+        $this->requestMock = $this->getMockBuilder(RequestInterface::class)->getMockForAbstractClass();
+        $responseMock = $this->getMockBuilder(ResponseInterface::class)->getMockForAbstractClass();
 
         $contextMock = $this->getMockBuilder(Context::class)
-            ->setMethods(['getRequest', 'getResponse'])
+            ->setMethods([
+            'getRequest',
+            'getResponse'
+        ])
             ->disableOriginalConstructor()
             ->getMock();
         $contextMock->expects($this->any())
@@ -63,13 +68,10 @@ class IndexTest extends TestCase
             ->method('getResponse')
             ->willReturn($responseMock);
 
-        $this->controller = (new ObjectManagerHelper($this))->getObject(
-            IndexStub::class,
-            [
-                'context' => $contextMock,
-                'contactsConfig' => $this->configMock
-            ]
-        );
+        $this->controller = (new ObjectManagerHelper($this))->getObject(IndexStub::class, [
+            'context' => $contextMock,
+            'contactsConfig' => $this->configMock
+        ]);
     }
 
     /**

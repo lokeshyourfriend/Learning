@@ -79,7 +79,7 @@ class ContactFormTest extends TestCase
     {
         $this->urlBuilderMock->expects($this->once())
             ->method('getUrl')
-            ->with('contact/index/post', [
+            ->with('customform/index/post', [
             '_secure' => true
         ]);
         $this->contactForm->getFormAction();

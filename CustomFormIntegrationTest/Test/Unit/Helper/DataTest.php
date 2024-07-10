@@ -3,11 +3,10 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
+namespace Learning\CustomForm\Test\Unit\Helper;
 
-namespace Magento\Contact\Test\Unit\Helper;
-
-use Magento\Contact\Helper\Data;
+use Learning\CustomForm\Helper\Data;
 use Magento\Customer\Api\Data\CustomerInterface;
 use Magento\Customer\Helper\View;
 use Magento\Customer\Model\Data\Customer;
@@ -20,10 +19,12 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
+ *
  * @covers \Magento\Contact\Helper\Data
  */
 class DataTest extends TestCase
 {
+
     /**
      * Helper
      *
@@ -32,26 +33,31 @@ class DataTest extends TestCase
     private $helper;
 
     /**
+     *
      * @var ScopeConfigInterface|MockObject
      */
     private $scopeConfigMock;
 
     /**
+     *
      * @var Session|MockObject
      */
     private $customerSessionMock;
 
     /**
+     *
      * @var View|MockObject
      */
     private $customerViewHelperMock;
 
     /**
+     *
      * @var ObjectManagerHelper
      */
     private $objectManagerHelper;
 
     /**
+     *
      * @inheritDoc
      */
     protected function setUp(): void
@@ -59,7 +65,9 @@ class DataTest extends TestCase
         $this->scopeConfigMock = $this->getMockForAbstractClass(ScopeConfigInterface::class);
 
         $contextMock = $this->getMockBuilder(Context::class)
-            ->setMethods(['getScopeConfig'])
+            ->setMethods([
+            'getScopeConfig'
+        ])
             ->disableOriginalConstructor()
             ->getMock();
         $contextMock->expects($this->any())
@@ -71,14 +79,11 @@ class DataTest extends TestCase
         $this->customerViewHelperMock = $this->createMock(View::class);
 
         $this->objectManagerHelper = new ObjectManagerHelper($this);
-        $this->helper = $this->objectManagerHelper->getObject(
-            Data::class,
-            [
-                'context' => $contextMock,
-                'customerSession' => $this->customerSessionMock,
-                'customerViewHelper' => $this->customerViewHelperMock
-            ]
-        );
+        $this->helper = $this->objectManagerHelper->getObject(Data::class, [
+            'context' => $contextMock,
+            'customerSession' => $this->customerSessionMock,
+            'customerViewHelper' => $this->customerViewHelperMock
+        ]);
     }
 
     /**
@@ -183,8 +188,7 @@ class DataTest extends TestCase
             'email' => 'Some Email'
         ];
 
-        $dataPersistorMock = $this->getMockBuilder(DataPersistorInterface::class)
-            ->getMockForAbstractClass();
+        $dataPersistorMock = $this->getMockBuilder(DataPersistorInterface::class)->getMockForAbstractClass();
         $dataPersistorMock->expects($this->once())
             ->method('get')
             ->with('contact_us')
